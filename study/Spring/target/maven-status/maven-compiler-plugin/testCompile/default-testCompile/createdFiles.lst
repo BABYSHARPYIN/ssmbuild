@@ -1,0 +1,5 @@
+TestStudent.class
+service/TestUserService.class
+config/TestConfig.class
+TestHello.class
+autowired/TestPeople.class

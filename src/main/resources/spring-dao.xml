@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+    <!--1.关联数据库配置文件-->
+    <context:property-placeholder location="classpath:database.properties"/>
+    <!--2.DataSource: 使用Spring的数据源替换Mybatis的配置 c3p0 dbcp druid
+    我们这里使用 Spring 提供的 jdbc dataSource-->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass"    value="${jdbc.driver}"/>
+        <property name="jdbcUrl"    value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+
+        <!-- c3p0连接池的私有属性 -->
+        <property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="10"/>
+        <!-- 关闭连接后不自动commit -->
+        <property name="autoCommitOnClose" value="false"/>
+        <!-- 获取连接超时时间 -->
+        <property name="checkoutTimeout" value="10000"/>
+        <!-- 当获取连接失败重试次数 -->
+        <property name="acquireRetryAttempts" value="2"/>
+    </bean>
+
+    <!--4.sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <!--绑定 Mybatis 配置,注意这里是configLocation不是 configuration-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+    </bean>
+    <!--sqlSessionTemplate (这里的 sqlSessionTemplate 其实是准备为 UserMapperImpl 的属性注入服务做的准备,详见 applicationContext.xml)-->
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <!--构造器注入 sqlSession-->
+        <constructor-arg type="org.apache.ibatis.session.SqlSessionFactory" index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+
+
+    <!--5.配置 MapperScannerConfigurer,动态的实现了 sqlSessionFactory & sqlSessionTemplate 注入到 Mapper 中-->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--注入sqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <property name="basePackage" value="com.rio.dao"/>
+    </bean>
+    <!--有了上面的动态注入,我们就不必为每个 Mapper 手动注入 sqlSession 支持了-->
+    <!--    <bean name="bookMapper" class="com.rio.dao.BookMapperImpl">-->
+    <!--        <property name="sqlSessionFactory" ref="sqlSessionFactory"/>-->
+    <!--        <property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>-->
+    <!--    </bean>-->
+
+
+</beans>

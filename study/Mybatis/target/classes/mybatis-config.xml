@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--引入外部配置文件-->
+    <properties resource="db.properties"/>
+    <!--设置-->
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+        <!--是否开启驼峰命名自动映射，即从经典数据库列名 A_COLUMN 映射到经典 Java 属性名 aColumn。-->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+        <!--显式的开启全局二级缓存-->
+        <setting name="cacheEnabled" value="true"/>
+    </settings>
+    <!--别名-->
+    <typeAliases>
+        <!--指定类固定别名-->
+        <!--<typeAlias type="pojo.User"  alias="User"/>-->
+        <!--扫描包作为别名,会将包中的类转小写作为别名,如果一定要改可以在实体类上添加注解 @Alias 指定别名-->
+        <package name="pojo"/>
+    </typeAliases>
+    <environments default="test">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://localhost:3306/MybatisStudy?useSSL=true&amp;useUnicode=true&amp;characterEncoding=utf8"/>
+                <property name="username" value="root"/>
+                <property name="password" value="Cc105481"/>
+                <property name="" value=""/>
+            </dataSource>
+        </environment>
+        <environment id="test">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+        <!--包扫描的方式直接获取一个包下的所有 xml-->
+        <package name="dao"/>
+        <!--xml映射 (推荐使用该方式)-->
+        <!--<mapper resource="dao/*.xml"/>-->
+        <!--接口映射(xml 资源名必须和接口名一致且在同包下)-->
+        <!--<mapper class="dao.UserMapper"/>-->
+    </mappers>
+</configuration>

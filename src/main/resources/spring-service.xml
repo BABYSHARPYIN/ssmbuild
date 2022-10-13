@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        https://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd">
+
+
+
+    <!--1.扫描包自动注册 service-->
+    <context:component-scan base-package="com.rio.service"/>
+    <!--2.通过配置或注解实现注入 bean-->
+    <bean id="bookService" class="com.rio.service.BookServiceImpl">
+        <property name="bookMapper" ref="bookMapper"/>
+    </bean>
+
+    <!--3.配置声明式事务支持-->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+    <!--结合AOP实现事务的织入-->
+    <!--配置事务的类 Spring 已经提供-->
+        <tx:advice id="txAdvice" transaction-manager="transactionManager">
+            <!--给哪些方法配置事务-->
+            <!--配置事务的传播特性: new-->
+            <tx:attributes>
+                <tx:method name="add" propagation="REQUIRED"/>
+                <tx:method name="delete" propagation="REQUIRED"/>
+                <tx:method name="update" propagation="REQUIRED"/>
+                <!--这个方法为只读,不能操作增删改-->
+                <tx:method name="query" read-only="true"/>
+                <tx:method name="*" propagation="REQUIRED"/>
+            </tx:attributes>
+        </tx:advice>
+        <!--配置事务的切入-->
+        <aop:config>
+            <aop:pointcut id="txPointCut" expression="execution(* com.rio.service.*.*(..))"/>
+            <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut"/>
+        </aop:config>
+
+
+</beans>

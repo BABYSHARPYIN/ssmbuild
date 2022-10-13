@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--开启注解的支持-->
+    <context:annotation-config/>
+    <!--开启指定包下的注解支持-->
+    <context:component-scan base-package="pojo"/>
+
+    <!--注册 bean-->
+    <bean id="dog"  class="pojo.autowired.Dog"/>
+    <bean id="cat"  class="pojo.autowired.Cat"/>
+    <bean id="people"  class="pojo.autowired.People"/>
+    <!--=================使用</>来注入 bean======================-->
+    <!--<bean id="cat" class="pojo.autowired.Cat"></bean>
+    <bean id="dog" class="pojo.autowired.Dog"></bean>
+    &lt;!&ndash;    <bean id="people" class="pojo.autowired.People" autowire="byType">&ndash;&gt;
+    <bean id="people" class="pojo.autowired.People" autowire="byName">
+        <property name="name" value="rio"/>
+        &lt;!&ndash;<property name="cat" ref="cat"/>
+        <property name="dog" ref="dog"/>&ndash;&gt;
+    </bean>-->
+</beans>

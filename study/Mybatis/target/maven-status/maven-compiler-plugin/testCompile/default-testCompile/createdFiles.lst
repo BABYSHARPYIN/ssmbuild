@@ -1,0 +1,4 @@
+dao/UserMapperTest.class
+dao/BlogMapperTest.class
+dao/StudentMapperTest.class
+dao/TeacherMapperTest.class

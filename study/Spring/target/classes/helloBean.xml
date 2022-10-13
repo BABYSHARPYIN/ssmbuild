@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="hello" class="pojo.Hello">
+        <!--参考文档: https://docs.spring.io/spring-framework/docs/current/reference/html/core.html#beans-constructor-injection-->
+        <!--指定属性构造对象-->
+        <!--<property name="str"  value="set属性注入构造对象"/>-->
+
+        <!--有参构造注入对象-->
+        <!--<constructor-arg index="0" value="参数下标构造对象"/>-->
+        <!--<constructor-arg type="String" value="参数类型构造对象(不建议使用)"/>-->
+        <constructor-arg name="str" value="通过参数名构造对象"/>
+    </bean>
+    <!--别名-->
+    <alias name="hello" alias="aliasHello"/>
+
+
+    <!-- more bean definitions go here -->
+
+</beans>

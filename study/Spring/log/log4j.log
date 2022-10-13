@@ -1,0 +1,13 @@
+[INFO][2022-10-08 11:32:09][proxy.静态代理.demo02.UserServiceImpl]updating
+[INFO][2022-10-08 11:32:09][proxy.静态代理.demo02.UserServiceImpl]更新用户
+[INFO][2022-10-08 14:21:18][proxy.静态代理.demo02.UserServiceImpl]updating
+[INFO][2022-10-08 14:21:18][proxy.静态代理.demo02.UserServiceImpl]更新用户
+[INFO][2022-10-08 14:21:52][proxy.动态代理.demo01.Landlord]出租
+[INFO][2022-10-08 15:20:02][proxy.动态代理.demo01.Landlord]出租
+[INFO][2022-10-08 15:20:42][proxy.动态代理.demo01.Landlord]出租
+[INFO][2022-10-08 15:21:43][proxy.动态代理.demo01.Landlord]出租
+[INFO][2022-10-08 15:22:01][proxy.动态代理.demo01.Landlord]出租
+[INFO][2022-10-08 15:23:46][proxy.动态代理.demo01.Landlord]出租
+[INFO][2022-10-08 15:30:34][proxy.动态代理.demo01.Landlord]出租
+[INFO][2022-10-08 15:31:12][proxy.动态代理.demo01.Landlord]出租
+[INFO][2022-10-08 15:31:19][proxy.动态代理.demo01.Landlord]出租
